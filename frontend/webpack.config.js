@@ -29,6 +29,10 @@ module.exports = {
     host: process.env.HOST || '0.0.0.0',
     port: process.env.PORT || 8000,
   },
+  watchOptions: {
+    aggregateTimeout: 500, // delay before reloading
+    poll: 1000 // enable polling since fsevents are not supported in docker
+  },
   output: {
     filename: '[name].[hash:8].js',
     publicPath: '/',
