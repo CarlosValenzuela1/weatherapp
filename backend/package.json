@@ -8,6 +8,7 @@
     "start": "node src/index.js",
     "dev": "DEBUG=weathermap ./node_modules/.bin/nodemon src/index.js",
     "hot-reload": "./node_modules/.bin/nodemon --legacy-watch src/index.js",
+    "temp-debug": "nodemon --legacy-watch src/index.js",
     "lint": "eslint src/*.js"
   },
   "dependencies": {

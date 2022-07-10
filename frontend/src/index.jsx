@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const baseURL = process.env.ENDPOINT;
+// const baseURL = process.env.ENDPOINT;
+const baseURL = 'http://localhost:9000/api';
 
-const getWeatherFromApi = async () => {
+const getWeatherFromApi = async (lon, lat) => {
   try {
-    const response = await fetch(`${baseURL}/weather`);
+    const response = await fetch(`${baseURL}/weather?lon=${lon}&lat=${lat}`);
     return response.json();
   } catch (error) {
     console.error(error);
@@ -20,20 +21,34 @@ class Weather extends React.Component {
 
     this.state = {
       icon: "",
+      timeStamp: "",
     };
   }
 
   async componentDidMount() {
-    const weather = await getWeatherFromApi();
-    this.setState({icon: weather.icon.slice(0, -1)});
+    const weather = await this.getWeatherByGeoLocation();
+  }
+
+  async getWeatherByGeoLocation() {
+    window.navigator.geolocation.getCurrentPosition(async (pos) => {
+      if (pos.coords) {
+        const { longitude, latitude } = pos.coords;
+        const weather = await Promise.all([getWeatherFromApi(longitude, latitude),]);
+        this.setState({ icon: weather[0].response.icon.slice(0, -1) });
+        this.setState({ timeStamp: weather[0].timestamp });
+      }
+    });
   }
 
   render() {
-    const { icon } = this.state;
+    const { icon, timeStamp } = this.state;
 
     return (
-      <div className="icon">
-        { icon && <img src={`/img/${icon}.svg`} /> }
+      <div>
+        <div className="icon">
+          {icon && <img src={`/img/${icon}.svg`} />}
+          Forecast for: {timeStamp}
+        </div>
       </div>
     );
   }
