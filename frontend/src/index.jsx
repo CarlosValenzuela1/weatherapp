@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// const baseURL = process.env.ENDPOINT;
-const baseURL = 'http://localhost:9000/api';
+const baseURL = process.env.ENDPOINT;
+// const baseURL = 'http://localhost:9000/api';
 
 const getWeatherFromApi = async (lon, lat) => {
   try {
