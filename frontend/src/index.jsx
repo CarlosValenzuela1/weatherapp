@@ -20,20 +20,20 @@ class Weather extends React.Component {
     super(props);
 
     this.state = {
-      icon: "",
-      timeStamp: "",
+      icon: '',
+      timeStamp: '',
     };
   }
 
   async componentDidMount() {
-    const weather = await this.getWeatherByGeoLocation();
+    await this.getWeatherByGeoLocation();
   }
 
   async getWeatherByGeoLocation() {
     window.navigator.geolocation.getCurrentPosition(async (pos) => {
       if (pos.coords) {
         const { longitude, latitude } = pos.coords;
-        const weather = await Promise.all([getWeatherFromApi(longitude, latitude),]);
+        const weather = await Promise.all([getWeatherFromApi(longitude, latitude)]);
         this.setState({ icon: weather[0].response.icon.slice(0, -1) });
         this.setState({ timeStamp: weather[0].timestamp });
       }
@@ -46,8 +46,10 @@ class Weather extends React.Component {
     return (
       <div>
         <div className="icon">
-          {icon && <img src={`/img/${icon}.svg`} />}
-          Forecast for: {timeStamp}
+          {icon && <img alt="weather" src={`/img/${icon}.svg`} />}
+          Forecast for:
+          {' '}
+          {timeStamp}
         </div>
       </div>
     );
@@ -56,5 +58,5 @@ class Weather extends React.Component {
 
 ReactDOM.render(
   <Weather />,
-  document.getElementById('app')
+  document.getElementById('app'),
 );
