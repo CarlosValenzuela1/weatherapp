@@ -3,7 +3,7 @@ services:
   weatherapp_backend:
     container_name: weatherapp_backend
     environment:
-      - APPID=f0ecbddd895ef675d968514b4069e073 # Suggestion: Not to add this within the docker-compose file
+      - APPID=f0ecbddd895ef675d968514b4069e073
     build:
       context: ./backend
       dockerfile: Dockerfile
